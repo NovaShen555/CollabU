@@ -1,0 +1,78 @@
+# General
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
+*.zip
+
+# Root Artifacts
+CollabU.zip
+
+# ----------------------
+# Backend (Python/Flask)
+# ----------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+.venv
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Backend Specific
+backend/instance/
+backend/uploads/
+# IMPORTANT: Migrations should generally be tracked, but __pycache__ inside them should not
+backend/migrations/__pycache__/
+# Explicitly ignoring the hardcoded secret file found during analysis
+backend/debug_auth.py
+backend/app.zip
+
+# ----------------------
+# Frontend (Vite/React)
+# ----------------------
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# ----------------------
+# Mobile (Flutter & HarmonyOS)
+# ----------------------
+# Flutter
+mobile/.dart_tool/
+mobile/.flutter-plugins
+mobile/.flutter-plugins-dependencies
+mobile/build/
+mobile/pubspec.lock
+
+# Android
+mobile/android/.gradle
+mobile/android/local.properties
+mobile/android/app/release
+
+
+# iOS
+mobile/ios/.symlinks
+mobile/ios/Pods
+mobile/ios/Flutter/Flutter.framework
+mobile/ios/Flutter/App.framework
+
+# HarmonyOS (Ohos)
+mobile/ohos/node_modules/
+mobile/ohos/oh_modules/
+mobile/ohos/.hvigor/
+mobile/ohos/build/
+mobile/ohos/.cxx/
+mobile/ohos/local.properties
+mobile/ohos/oh-package-lock.json5
+mobile/ohos/package-lock.json
