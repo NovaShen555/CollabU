@@ -379,6 +379,9 @@ class _TeamScreenState extends State<TeamScreen> {
 
   void _showJoinTeamDialog(BuildContext context) {
     final controller = TextEditingController();
+    final teamProvider = Provider.of<TeamProvider>(context, listen: false);
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+    
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -414,18 +417,17 @@ class _TeamScreenState extends State<TeamScreen> {
           ),
           TextButton(
             onPressed: () async {
-              if (controller.text.isEmpty) return;
-              final success = await Provider.of<TeamProvider>(context, listen: false)
-                  .joinTeam(controller.text);
+              if (controller.text.trim().isEmpty) return;
+              Navigator.pop(ctx);
+              final success = await teamProvider.joinTeam(controller.text.trim());
               if (mounted) {
-                Navigator.pop(ctx);
                 if (success) {
-                  ScaffoldMessenger.of(context).showSnackBar(
+                  scaffoldMessenger.showSnackBar(
                     const SnackBar(content: Text('成功加入团队')),
                   );
                 } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(Provider.of<TeamProvider>(context, listen: false).error ?? '加入失败')),
+                  scaffoldMessenger.showSnackBar(
+                    SnackBar(content: Text(teamProvider.error ?? '加入失败')),
                   );
                 }
               }

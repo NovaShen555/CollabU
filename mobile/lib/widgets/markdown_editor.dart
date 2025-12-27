@@ -50,11 +50,12 @@ class _MarkdownEditorState extends State<MarkdownEditor> {
   // 继续...
 
   Widget _buildToolbar() {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: Colors.grey.shade100,
-        border: Border(bottom: BorderSide(color: Colors.grey.shade300)),
+        color: isDark ? Colors.grey.shade800 : Colors.grey.shade100,
+        border: Border(bottom: BorderSide(color: Theme.of(context).dividerColor)),
       ),
       child: Row(
         children: [
@@ -90,27 +91,51 @@ class _MarkdownEditorState extends State<MarkdownEditor> {
   // 继续2...
 
   Widget _buildEditor() {
-    return TextField(
-      controller: _controller,
-      maxLines: null,
-      expands: true,
-      textAlignVertical: TextAlignVertical.top,
-      decoration: const InputDecoration(
-        hintText: '输入Markdown内容...',
-        border: InputBorder.none,
-        contentPadding: EdgeInsets.all(12),
+    return Container(
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: TextField(
+        controller: _controller,
+        maxLines: null,
+        expands: true,
+        textAlignVertical: TextAlignVertical.top,
+        decoration: InputDecoration(
+          hintText: '输入Markdown内容...',
+          hintStyle: TextStyle(color: Theme.of(context).hintColor),
+          border: InputBorder.none,
+          contentPadding: const EdgeInsets.all(12),
+        ),
+        style: TextStyle(
+          fontFamily: 'monospace',
+          color: Theme.of(context).textTheme.bodyLarge?.color,
+        ),
+        onChanged: (value) => widget.onChanged?.call(value),
       ),
-      style: const TextStyle(fontFamily: 'monospace'),
-      onChanged: (value) => widget.onChanged?.call(value),
     );
   }
 
   Widget _buildPreview() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(12),
-      child: MarkdownBody(
-        data: _controller.text,
-        selectable: true,
+    return Container(
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(12),
+        child: MarkdownBody(
+          data: _controller.text,
+          selectable: true,
+          styleSheet: MarkdownStyleSheet(
+            p: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color),
+            h1: TextStyle(color: Theme.of(context).textTheme.titleLarge?.color),
+            h2: TextStyle(color: Theme.of(context).textTheme.titleLarge?.color),
+            h3: TextStyle(color: Theme.of(context).textTheme.titleLarge?.color),
+            code: TextStyle(
+              color: Theme.of(context).colorScheme.primary,
+              backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+            ),
+            codeblockDecoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surfaceContainerHighest,
+              borderRadius: BorderRadius.circular(4),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -121,12 +146,13 @@ class _MarkdownEditorState extends State<MarkdownEditor> {
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        border: Border(top: BorderSide(color: Colors.grey.shade300)),
+        color: Theme.of(context).cardColor,
+        border: Border(top: BorderSide(color: Theme.of(context).dividerColor)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('附件', style: TextStyle(fontWeight: FontWeight.bold)),
+          Text('附件', style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).textTheme.titleMedium?.color)),
           const SizedBox(height: 8),
           Wrap(
             spacing: 8,
